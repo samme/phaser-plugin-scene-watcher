@@ -1,0 +1,10 @@
+extends: '../.eslintrc.yml'
+env:
+  browser: true
+  es6: false
+rules:
+  no-console:
+    - warn
+    - allow:
+      - assert
+      - log
