@@ -73,6 +73,23 @@
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
+  var _ICONS;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
   var Pad = _phaser2.default.Utils.String.Pad;
   var ICON_DEFAULT = ' ';
   var ICON_PAUSED = '.';
@@ -81,9 +98,9 @@
   var NEWLINE = '\n';
   var PAD_LEFT = 1;
   var PAD_RIGHT = 2;
-  var EVENTS = ['boot', 'pause', 'resume', 'sleep', 'wake', 'start', 'ready', 'shutdown', 'destroy'];
+  var SCENE_EVENTS = ['boot', 'pause', 'resume', 'sleep', 'wake', 'start', 'ready', 'shutdown', 'destroy'];
+  var SCENE_STATES = ['pending', 'init', 'start', 'loading', 'creating', 'running', 'paused', 'sleeping', 'shutdown', 'destroyed'];
   var SPACE = ' ';
-  var STATES = ['pending', 'init', 'start', 'loading', 'creating', 'running', 'paused', 'sleeping', 'shutdown', 'destroyed'];
   var VIEW_STYLE = {
     position: 'absolute',
     left: '0',
@@ -97,22 +114,14 @@
     color: 'white',
     pointerEvents: 'none'
   };
+  var ICONS = (_ICONS = {}, _defineProperty(_ICONS, _phaser2.default.Scenes.RUNNING, ICON_RUNNING), _defineProperty(_ICONS, _phaser2.default.Scenes.SLEEPING, ICON_SLEEPING), _defineProperty(_ICONS, _phaser2.default.Scenes.PAUSED, ICON_PAUSED), _ICONS);
 
   var getIcon = function getIcon(scene) {
-    switch (scene.sys.settings.status) {
-      case _phaser2.default.Scenes.RUNNING:
-        return ICON_RUNNING;
-      case _phaser2.default.Scenes.SLEEPING:
-        return ICON_SLEEPING;
-      case _phaser2.default.Scenes.PAUSED:
-        return ICON_PAUSED;
-      default:
-        return ICON_DEFAULT;
-    }
+    return ICONS[scene.sys.settings.status] || ICON_DEFAULT;
   };
 
   var getStatus = function getStatus(scene) {
-    return STATES[scene.sys.settings.status];
+    return SCENE_STATES[scene.sys.settings.status];
   };
 
   var getDisplayListLength = function getDisplayListLength(scene) {
@@ -142,7 +151,7 @@
         Object.assign(this.view.style, VIEW_STYLE);
         this.game.canvas.parentNode.append(this.view);
 
-        EVENTS.forEach(function (eventName) {
+        SCENE_EVENTS.forEach(function (eventName) {
           this.eventHandlers[eventName] = function (sys) {
             console.log(eventName, sys.settings.key);
           };
@@ -161,6 +170,7 @@
     }, {
       key: 'destroy',
       value: function destroy() {
+        this.unwatchAll();
         this.view.parentNode.remove(this.view);
         delete this.view;
         _phaser2.default.Plugins.BasePlugin.call(this);
@@ -178,9 +188,7 @@
     }, {
       key: 'getSceneOutput',
       value: function getSceneOutput(scene) {
-        var settings = scene.sys.settings;
-
-        return Pad(settings.key.substr(0, 12), 12, SPACE, PAD_LEFT) + SPACE + getIcon(scene) + SPACE + Pad(getStatus(scene) || '?', 8, SPACE, PAD_RIGHT) + Pad(getDisplayListLength(scene), 4, SPACE, PAD_LEFT) + Pad(getUpdateListLength(scene), 4, SPACE, PAD_LEFT);
+        return Pad(scene.sys.settings.key.substr(0, 12), 12, SPACE, PAD_LEFT) + SPACE + getIcon(scene) + SPACE + Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) + Pad(getDisplayListLength(scene), 4, SPACE, PAD_LEFT) + Pad(getUpdateListLength(scene), 4, SPACE, PAD_LEFT);
       }
     }, {
       key: 'watchAll',
@@ -192,6 +200,18 @@
       value: function watch(scene) {
         for (var eventName in this.eventHandlers) {
           scene.events.on(eventName, this.eventHandlers[eventName], this);
+        }
+      }
+    }, {
+      key: 'unwatchAll',
+      value: function unwatchAll() {
+        this.game.scene.scenes.forEach(this.unwatch, this);
+      }
+    }, {
+      key: 'unwatch',
+      value: function unwatch(scene) {
+        for (var eventName in this.eventHandlers) {
+          scene.events.off(eventName, this.eventHandlers[eventName], this);
         }
       }
     }]);

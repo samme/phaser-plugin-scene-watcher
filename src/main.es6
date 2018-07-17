@@ -8,9 +8,9 @@ const ICON_SLEEPING = '-';
 const NEWLINE = '\n';
 const PAD_LEFT = 1;
 const PAD_RIGHT = 2;
-const EVENTS = [ 'boot', 'pause', 'resume', 'sleep', 'wake', 'start', 'ready', 'shutdown', 'destroy' ];
+const SCENE_EVENTS = [ 'boot', 'pause', 'resume', 'sleep', 'wake', 'start', 'ready', 'shutdown', 'destroy' ];
+const SCENE_STATES = [ 'pending', 'init', 'start', 'loading', 'creating', 'running', 'paused', 'sleeping', 'shutdown', 'destroyed' ];
 const SPACE = ' ';
-const STATES = [ 'pending', 'init', 'start', 'loading', 'creating', 'running', 'paused', 'sleeping', 'shutdown', 'destroyed' ];
 const VIEW_STYLE = {
   position: 'absolute',
   left: '0',
@@ -24,22 +24,18 @@ const VIEW_STYLE = {
   color: 'white',
   pointerEvents: 'none'
 };
+const ICONS = {
+  [Phaser.Scenes.RUNNING]: ICON_RUNNING,
+  [Phaser.Scenes.SLEEPING]: ICON_SLEEPING,
+  [Phaser.Scenes.PAUSED]: ICON_PAUSED
+};
 
 const getIcon = function (scene) {
-  switch (scene.sys.settings.status) {
-  case Phaser.Scenes.RUNNING:
-    return ICON_RUNNING;
-  case Phaser.Scenes.SLEEPING:
-    return ICON_SLEEPING;
-  case Phaser.Scenes.PAUSED:
-    return ICON_PAUSED;
-  default:
-    return ICON_DEFAULT;
-  }
+  return ICONS[scene.sys.settings.status] || ICON_DEFAULT;
 };
 
 const getStatus = function (scene) {
-  return STATES[scene.sys.settings.status];
+  return SCENE_STATES[scene.sys.settings.status];
 };
 
 const getDisplayListLength = function (scene) {
@@ -62,7 +58,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
     Object.assign(this.view.style, VIEW_STYLE);
     this.game.canvas.parentNode.append(this.view);
 
-    EVENTS.forEach(function (eventName) {
+    SCENE_EVENTS.forEach(function (eventName) {
       this.eventHandlers[eventName] = function (sys) {
         console.log(eventName, sys.settings.key);
       };
@@ -93,11 +89,9 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   getSceneOutput (scene) {
-    var settings = scene.sys.settings;
-
-    return Pad(settings.key.substr(0, 12), 12, SPACE, PAD_LEFT) + SPACE +
+    return Pad(scene.sys.settings.key.substr(0, 12), 12, SPACE, PAD_LEFT) + SPACE +
       getIcon(scene) + SPACE +
-      Pad(getStatus(scene) || '?', 8, SPACE, PAD_RIGHT) +
+      Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) +
       Pad(getDisplayListLength(scene), 4, SPACE, PAD_LEFT) +
       Pad(getUpdateListLength(scene), 4, SPACE, PAD_LEFT);
   }
