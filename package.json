@@ -6,13 +6,15 @@
   "scripts": {
     "build": "npx babel src/main.es6 -o dist/SceneWatcherPlugin.js",
     "start": "npx babel src/main.es6 --watch -o dist/SceneWatcherPlugin.js",
-    "test": "eslint src/main.es6"
+    "test": "node -c dist/SceneWatcherPlugin.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/samme/phaser-plugin-scene-watcher.git"
   },
   "keywords": [
+    "phaser",
+    "phaser3",
     "phaser-plugin",
     "phaser3-plugin"
   ],
