@@ -6,14 +6,14 @@ new Phaser.Game({
   // ...
   plugins: {
     global: [
-      { key: 'SceneWatcher', plugin: Phaser.Plugins.SceneWatcherPlugin, start: true }
+      { key: 'SceneWatcherPlugin', plugin: Phaser.Plugins.SceneWatcherPlugin, start: true }
     ]
   },
   // ...
 });
 ```
 
-It shows each scene key, status, update list size, and display list size.
+It shows each scene's key, status, display list size, and update list size.
 
 Log scene events to console
 ---------------------------
@@ -23,7 +23,7 @@ new Phaser.Game({
   // ...
   callbacks: {
     postBoot: function (game) {
-      game.plugins.get('SceneWatcher').watchAll();
+      game.plugins.get('SceneWatcherPlugin').watchAll();
     }
   }
   // ...
