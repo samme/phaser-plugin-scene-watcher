@@ -1,6 +1,8 @@
 Phaser 3 Scene Watcher Plugin
 =============================
 
+[Demo](https://codepen.io/samme/pen/VBbJZM?editors=0010)
+
 ```javascript
 new Phaser.Game({
   // ...
