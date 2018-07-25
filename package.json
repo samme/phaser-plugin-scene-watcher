@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Scene monitoring and debugging",
   "main": "dist/SceneWatcherPlugin.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "npx babel src/main.es6 -o dist/SceneWatcherPlugin.js",
     "start": "npx babel src/main.es6 --watch -o dist/SceneWatcherPlugin.js",
