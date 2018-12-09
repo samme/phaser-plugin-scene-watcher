@@ -118,4 +118,6 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
 }
 
-Phaser.Plugins.SceneWatcherPlugin = SceneWatcherPlugin;
+if (typeof window !== 'undefined') {
+  window.PhaserSceneWatcherPlugin = SceneWatcherPlugin;
+}

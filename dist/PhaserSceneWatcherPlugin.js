@@ -1,6 +1,6 @@
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define(['exports', 'phaser'], factory);
+    define('phaser-plugin-scene-watcher', ['exports', 'phaser'], factory);
   } else if (typeof exports !== "undefined") {
     factory(exports, require('phaser'));
   } else {
@@ -8,7 +8,7 @@
       exports: {}
     };
     factory(mod.exports, global.Phaser);
-    global.main = mod.exports;
+    global.phaserPluginSceneWatcher = mod.exports;
   }
 })(this, function (exports, _phaser) {
   'use strict';
@@ -222,5 +222,7 @@
   exports.default = SceneWatcherPlugin;
 
 
-  _phaser2.default.Plugins.SceneWatcherPlugin = SceneWatcherPlugin;
+  if (typeof window !== 'undefined') {
+    window.PhaserSceneWatcherPlugin = SceneWatcherPlugin;
+  }
 });

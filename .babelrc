@@ -6,5 +6,6 @@
       }
     }]
   ],
+  "moduleId": "phaser-plugin-scene-watcher",
   "presets": ["env"]
 }

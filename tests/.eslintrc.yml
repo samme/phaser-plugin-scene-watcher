@@ -2,6 +2,11 @@ extends: '../.eslintrc.yml'
 env:
   browser: true
   es6: false
+parserOptions:
+  sourceType: script
+globals:
+  Phaser: false
+  PhaserSceneWatcherPlugin: false
 rules:
   no-console:
     - warn

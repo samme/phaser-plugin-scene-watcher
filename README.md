@@ -1,3 +1,5 @@
+![Preview](https://i.imgur.com/Xa9HxrU.png)
+
 Phaser 3 Scene Watcher Plugin
 =============================
 
@@ -8,7 +10,7 @@ new Phaser.Game({
   // ...
   plugins: {
     global: [
-      { key: 'SceneWatcherPlugin', plugin: Phaser.Plugins.SceneWatcherPlugin, start: true }
+      { key: 'SceneWatcherPlugin', plugin: PhaserSceneWatcherPlugin, start: true }
     ]
   },
   // ...

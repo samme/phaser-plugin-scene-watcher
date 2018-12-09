@@ -1,6 +1,6 @@
 console.assert(Phaser, 'Phaser');
 
-console.assert(Phaser.Plugins.SceneWatcherPlugin, 'Phaser.Plugins.SceneWatcherPlugin');
+console.assert(PhaserSceneWatcherPlugin, 'PhaserSceneWatcherPlugin');
 
 class SceneA extends Phaser.Scene {
 
@@ -84,12 +84,12 @@ var config = {
   scene: [ SceneA, SceneB, SceneC ],
   plugins: {
     global: [
-      { key: 'SceneWatcher', plugin: Phaser.Plugins.SceneWatcherPlugin, start: true }
+      { key: 'SceneWatcherPlugin', plugin: PhaserSceneWatcherPlugin, start: true }
     ]
   },
   callbacks: {
     postBoot: function (game) {
-      game.plugins.get('SceneWatcher').watchAll();
+      game.plugins.get('SceneWatcherPlugin').watchAll();
     }
   }
 };

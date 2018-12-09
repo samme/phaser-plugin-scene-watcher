@@ -2,15 +2,15 @@
   "name": "phaser-plugin-scene-watcher",
   "version": "1.0.1",
   "description": "Scene monitoring and debugging",
-  "main": "dist/SceneWatcherPlugin.js",
+  "main": "dist/PhaserSceneWatcherPlugin.js",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "npx babel src/main.es6 -o dist/SceneWatcherPlugin.js",
-    "start": "npx babel src/main.es6 --watch -o dist/SceneWatcherPlugin.js",
-    "test": "node -c dist/SceneWatcherPlugin.js"
+    "build": "npx babel src/index.js -o dist/PhaserSceneWatcherPlugin.js",
+    "start": "npx babel src/index.js --watch -o dist/PhaserSceneWatcherPlugin.js",
+    "test": "node -c dist/PhaserSceneWatcherPlugin.js"
   },
   "repository": {
     "type": "git",
