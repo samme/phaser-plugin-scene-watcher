@@ -5,6 +5,10 @@
 - Renamed dist script to `dist/PhaserSceneWatcherPlugin`.
 - Renamed src script to `src/index.js`.
 
+#### 1.0.1
+
+- Removed extra files from npm module.
+
 #### 1.0.0
 
-- npm release
+- npm release.
