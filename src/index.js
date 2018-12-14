@@ -75,9 +75,9 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
   destroy () {
     this.unwatchAll();
-    this.view.parentNode.remove(this.view);
+    this.view.remove();
     delete this.view;
-    Phaser.Plugins.BasePlugin.call(this);
+    super.destroy();
   }
 
   postStep () {

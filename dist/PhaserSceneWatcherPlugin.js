@@ -57,6 +57,31 @@
     return call && (typeof call === "object" || typeof call === "function") ? call : self;
   }
 
+  var _get = function get(object, property, receiver) {
+    if (object === null) object = Function.prototype;
+    var desc = Object.getOwnPropertyDescriptor(object, property);
+
+    if (desc === undefined) {
+      var parent = Object.getPrototypeOf(object);
+
+      if (parent === null) {
+        return undefined;
+      } else {
+        return get(parent, property, receiver);
+      }
+    } else if ("value" in desc) {
+      return desc.value;
+    } else {
+      var getter = desc.get;
+
+      if (getter === undefined) {
+        return undefined;
+      }
+
+      return getter.call(receiver);
+    }
+  };
+
   function _inherits(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
       throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -171,9 +196,9 @@
       key: 'destroy',
       value: function destroy() {
         this.unwatchAll();
-        this.view.parentNode.remove(this.view);
+        this.view.remove();
         delete this.view;
-        _phaser2.default.Plugins.BasePlugin.call(this);
+        _get(SceneWatcherPlugin.prototype.__proto__ || Object.getPrototypeOf(SceneWatcherPlugin.prototype), 'destroy', this).call(this);
       }
     }, {
       key: 'postStep',
