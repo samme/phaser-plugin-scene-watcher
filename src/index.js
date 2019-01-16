@@ -51,6 +51,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   constructor (pluginManager) {
     super(pluginManager);
     this.eventHandlers = {};
+    this.output = '';
   }
 
   init () {
@@ -81,7 +82,12 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   postStep () {
-    this.view.textContent = this.getOutput();
+    const output = this.getOutput();
+
+    if (output !== this.output) {
+      this.view.textContent = output;
+      this.output = output;
+    }
   }
 
   getOutput () {

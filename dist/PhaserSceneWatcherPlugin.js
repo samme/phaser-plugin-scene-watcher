@@ -166,6 +166,7 @@
       var _this = _possibleConstructorReturn(this, (SceneWatcherPlugin.__proto__ || Object.getPrototypeOf(SceneWatcherPlugin)).call(this, pluginManager));
 
       _this.eventHandlers = {};
+      _this.output = '';
       return _this;
     }
 
@@ -203,7 +204,12 @@
     }, {
       key: 'postStep',
       value: function postStep() {
-        this.view.textContent = this.getOutput();
+        var output = this.getOutput();
+
+        if (output !== this.output) {
+          this.view.textContent = output;
+          this.output = output;
+        }
       }
     }, {
       key: 'getOutput',
