@@ -198,7 +198,7 @@
       value: function destroy() {
         this.unwatchAll();
         this.view.remove();
-        delete this.view;
+        this.view = null;
         _get(SceneWatcherPlugin.prototype.__proto__ || Object.getPrototypeOf(SceneWatcherPlugin.prototype), 'destroy', this).call(this);
       }
     }, {
