@@ -1,3 +1,7 @@
+#### 2.1.0
+
+- View is updated only when output changes.
+
 #### 2.0.0
 
 - Added global `PhaserSceneWatcherPlugin`.
