@@ -1,3 +1,7 @@
+#### 2.2.0
+
+- Added scene 'create' event.
+
 #### 2.1.0
 
 - View is updated only when output changes.
