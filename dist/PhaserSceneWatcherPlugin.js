@@ -123,7 +123,7 @@
   var NEWLINE = '\n';
   var PAD_LEFT = 1;
   var PAD_RIGHT = 2;
-  var SCENE_EVENTS = ['boot', 'pause', 'resume', 'sleep', 'wake', 'start', 'ready', 'shutdown', 'destroy'];
+  var SCENE_EVENTS = ['boot', 'pause', 'resume', 'sleep', 'wake', 'start', 'ready', 'create', 'shutdown', 'destroy'];
   var SCENE_STATES = ['pending', 'init', 'start', 'loading', 'creating', 'running', 'paused', 'sleeping', 'shutdown', 'destroyed'];
   var SPACE = ' ';
   var VIEW_STYLE = {
