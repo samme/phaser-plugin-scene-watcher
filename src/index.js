@@ -8,7 +8,25 @@ const ICON_SLEEPING = '-';
 const NEWLINE = '\n';
 const PAD_LEFT = 1;
 const PAD_RIGHT = 2;
-const SCENE_EVENTS = [ 'boot', 'pause', 'resume', 'sleep', 'wake', 'start', 'ready', 'create', 'shutdown', 'destroy' ];
+const SCENE_EVENTS = [
+  Phaser.Scenes.Events.BOOT,
+  Phaser.Scenes.Events.CREATE,
+  Phaser.Scenes.Events.DESTROY,
+  Phaser.Scenes.Events.PAUSE,
+  Phaser.Scenes.Events.READY,
+  Phaser.Scenes.Events.RESUME,
+  Phaser.Scenes.Events.SHUTDOWN,
+  Phaser.Scenes.Events.SLEEP,
+  Phaser.Scenes.Events.START,
+  Phaser.Scenes.Events.WAKE,
+];
+const SCENE_TRANSITION_EVENTS = [
+  Phaser.Scenes.Events.TRANSITION_COMPLETE,
+  Phaser.Scenes.Events.TRANSITION_INIT,
+  Phaser.Scenes.Events.TRANSITION_OUT,
+  Phaser.Scenes.Events.TRANSITION_START,
+  Phaser.Scenes.Events.TRANSITION_WAKE
+];
 const SCENE_STATES = [ 'pending', 'init', 'start', 'loading', 'creating', 'running', 'paused', 'sleeping', 'shutdown', 'destroyed' ];
 const SPACE = ' ';
 const VIEW_STYLE = {
@@ -51,6 +69,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   constructor (pluginManager) {
     super(pluginManager);
     this.eventHandlers = {};
+    this.transitionEventHandlers = {};
     this.output = '';
   }
 
@@ -60,9 +79,19 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
     this.game.canvas.parentNode.append(this.view);
 
     SCENE_EVENTS.forEach(function (eventName) {
-      this.eventHandlers[eventName] = function (sys) {
-        console.log(eventName, sys.settings.key);
-      };
+      if (eventName) {
+        this.eventHandlers[eventName] = function (sys) {
+          console.log(eventName, sys.settings.key);
+        };
+      }
+    }, this);
+
+    SCENE_TRANSITION_EVENTS.forEach(function (eventName) {
+      if (eventName) {
+        this.transitionEventHandlers[eventName] = function (scene) {
+          console.log(eventName, scene.sys.settings.key);
+        };
+      }
     }, this);
   }
 
@@ -109,6 +138,10 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   watch (scene) {
     for (let eventName in this.eventHandlers) {
       scene.events.on(eventName, this.eventHandlers[eventName], this);
+    }
+
+    for (let eventName in this.transitionEventHandlers) {
+      scene.events.on(eventName, this.transitionEventHandlers[eventName], this);
     }
   }
 
