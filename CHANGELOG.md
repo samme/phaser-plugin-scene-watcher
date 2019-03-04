@@ -1,3 +1,8 @@
+#### 3.0.0
+
+- Changed 'main' script to `src/index.js`.
+- Added scene transition events.
+
 #### 2.2.0
 
 - Added scene 'create' event.
@@ -10,7 +15,7 @@
 
 - Added global `PhaserSceneWatcherPlugin`.
 - Removed `Phaser.Plugin.SceneWatcher`. Use `PhaserSceneWatcherPlugin` instead.
-- Renamed dist script to `dist/PhaserSceneWatcherPlugin`.
+- Renamed dist script to `dist/PhaserSceneWatcherPlugin.js`.
 - Renamed src script to `src/index.js`.
 
 #### 1.0.1
