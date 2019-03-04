@@ -3,7 +3,10 @@
 Phaser 3 Scene Watcher Plugin
 =============================
 
-[Demo](https://codepen.io/samme/pen/VBbJZM?editors=0010)
+It shows each scene's key, status, display list size, and update list size. [Demo](https://codepen.io/samme/pen/VBbJZM?editors=0010)
+
+Add
+---
 
 ```javascript
 new Phaser.Game({
@@ -17,7 +20,11 @@ new Phaser.Game({
 });
 ```
 
-It shows each scene's key, status, display list size, and update list size.
+If you're using ES6 modules, you can use this plugin's default export in place of `PhaserSceneWatcherPlugin`:
+
+```javascript
+import SceneWatcherPlugin from 'phaser-plugin-scene-watcher';
+```
 
 Log scene events to console
 ---------------------------
