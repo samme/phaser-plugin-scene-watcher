@@ -38,7 +38,7 @@ const VIEW_STYLE = {
   width: '20em',
   fontSize: '16px',
   lineHeight: '20px',
-  backgroundColor: 'rgba(0,0,0,0.875)',
+  backgroundColor: 'rgba(0,0,0,0.8)',
   color: 'white',
   pointerEvents: 'none'
 };
