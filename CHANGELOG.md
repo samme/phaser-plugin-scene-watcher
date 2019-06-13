@@ -1,3 +1,9 @@
+#### 3.1.0
+
+- Reduced transparency.
+- Logs scene events as _scene key_, _event name_.
+- Updated Phaser dependency to 3.17.0. 
+
 #### 3.0.1
 
 - Updated Phaser dependency to 3.16.2 (required since plugin v3.0.0).
