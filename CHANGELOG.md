@@ -1,3 +1,7 @@
+#### 3.1.2
+
+- Updated dist script. It was omitted from v3.1.0 and v3.1.1 by mistake.
+
 #### 3.1.1
 
 - Updated dist script. It was omitted from v3.1.0 by mistake.
