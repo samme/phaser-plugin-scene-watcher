@@ -11,7 +11,8 @@
     "build": "npx babel src/index.js -o dist/PhaserSceneWatcherPlugin.js",
     "start": "npx babel src/index.js --watch -o dist/PhaserSceneWatcherPlugin.js",
     "test": "npx eslint src/index.js",
-    "test:dist": "node -c dist/PhaserSceneWatcherPlugin.js"
+    "test:dist": "node -c dist/PhaserSceneWatcherPlugin.js",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
