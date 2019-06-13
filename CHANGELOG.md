@@ -1,7 +1,11 @@
+#### 3.1.1
+
+- Updated dist script. It was omitted from v3.1.0 by mistake.
+
 #### 3.1.0
 
 - Reduced transparency.
-- Logs scene events as _scene key_, _event name_.
+- Reversed the order of arguments when logging scene events. Scene key is now first.
 - Updated Phaser dependency to 3.17.0. 
 
 #### 3.0.1
