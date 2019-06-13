@@ -1,6 +1,6 @@
 #### 3.0.1
 
-- Updated Phaser dependency to 3.16.2 (required since v3.0.0).
+- Updated Phaser dependency to 3.16.2 (required since plugin v3.0.0).
 
 #### 3.0.0
 
