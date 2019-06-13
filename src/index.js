@@ -19,14 +19,14 @@ const SCENE_EVENTS = [
   Phaser.Scenes.Events.SLEEP,
   Phaser.Scenes.Events.START,
   Phaser.Scenes.Events.WAKE,
-];
+].filter(Boolean);
 const SCENE_TRANSITION_EVENTS = [
   Phaser.Scenes.Events.TRANSITION_COMPLETE,
   Phaser.Scenes.Events.TRANSITION_INIT,
   Phaser.Scenes.Events.TRANSITION_OUT,
   Phaser.Scenes.Events.TRANSITION_START,
   Phaser.Scenes.Events.TRANSITION_WAKE
-];
+].filter(Boolean);
 const SCENE_STATES = [ 'pending', 'init', 'start', 'loading', 'creating', 'running', 'paused', 'sleeping', 'shutdown', 'destroyed' ];
 const SPACE = ' ';
 const VIEW_STYLE = {
@@ -78,21 +78,9 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
     Object.assign(this.view.style, VIEW_STYLE);
     this.game.canvas.parentNode.append(this.view);
 
-    SCENE_EVENTS.forEach(function (eventName) {
-      if (eventName) {
-        this.eventHandlers[eventName] = function (sys) {
-          console.log(eventName, sys.settings.key);
-        };
-      }
-    }, this);
+    SCENE_EVENTS.forEach(this.createEventHandler, this);
 
-    SCENE_TRANSITION_EVENTS.forEach(function (eventName) {
-      if (eventName) {
-        this.transitionEventHandlers[eventName] = function (scene) {
-          console.log(eventName, scene.sys.settings.key);
-        };
-      }
-    }, this);
+    SCENE_TRANSITION_EVENTS.forEach(this.createTransitionEventHandler, this);
   }
 
   start () {
@@ -117,6 +105,18 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
       this.view.textContent = output;
       this.output = output;
     }
+  }
+
+  createEventHandler (name) {
+    this.eventHandlers[name] = function (sys) {
+      console.log(name, sys.settings.key);
+    };
+  }
+
+  createTransitionEventHandler (name) {
+    this.transitionEventHandlers[name] = function (scene) {
+      console.log(name, scene.sys.settings.key);
+    };
   }
 
   getOutput () {
