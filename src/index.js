@@ -109,13 +109,13 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
   createEventHandler (name) {
     this.eventHandlers[name] = function (sys) {
-      console.log(name, sys.settings.key);
+      console.log(sys.settings.key, name);
     };
   }
 
   createTransitionEventHandler (name) {
     this.transitionEventHandlers[name] = function (scene) {
-      console.log(name, scene.sys.settings.key);
+      console.log(scene.sys.settings.key, name);
     };
   }
 
