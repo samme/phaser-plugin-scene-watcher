@@ -123,8 +123,8 @@
   var NEWLINE = '\n';
   var PAD_LEFT = 1;
   var PAD_RIGHT = 2;
-  var SCENE_EVENTS = [_phaser2.default.Scenes.Events.BOOT, _phaser2.default.Scenes.Events.CREATE, _phaser2.default.Scenes.Events.DESTROY, _phaser2.default.Scenes.Events.PAUSE, _phaser2.default.Scenes.Events.READY, _phaser2.default.Scenes.Events.RESUME, _phaser2.default.Scenes.Events.SHUTDOWN, _phaser2.default.Scenes.Events.SLEEP, _phaser2.default.Scenes.Events.START, _phaser2.default.Scenes.Events.WAKE];
-  var SCENE_TRANSITION_EVENTS = [_phaser2.default.Scenes.Events.TRANSITION_COMPLETE, _phaser2.default.Scenes.Events.TRANSITION_INIT, _phaser2.default.Scenes.Events.TRANSITION_OUT, _phaser2.default.Scenes.Events.TRANSITION_START, _phaser2.default.Scenes.Events.TRANSITION_WAKE];
+  var SCENE_EVENTS = [_phaser2.default.Scenes.Events.BOOT, _phaser2.default.Scenes.Events.CREATE, _phaser2.default.Scenes.Events.DESTROY, _phaser2.default.Scenes.Events.PAUSE, _phaser2.default.Scenes.Events.READY, _phaser2.default.Scenes.Events.RESUME, _phaser2.default.Scenes.Events.SHUTDOWN, _phaser2.default.Scenes.Events.SLEEP, _phaser2.default.Scenes.Events.START, _phaser2.default.Scenes.Events.WAKE].filter(Boolean);
+  var SCENE_TRANSITION_EVENTS = [_phaser2.default.Scenes.Events.TRANSITION_COMPLETE, _phaser2.default.Scenes.Events.TRANSITION_INIT, _phaser2.default.Scenes.Events.TRANSITION_OUT, _phaser2.default.Scenes.Events.TRANSITION_START, _phaser2.default.Scenes.Events.TRANSITION_WAKE].filter(Boolean);
   var SCENE_STATES = ['pending', 'init', 'start', 'loading', 'creating', 'running', 'paused', 'sleeping', 'shutdown', 'destroyed'];
   var SPACE = ' ';
   var VIEW_STYLE = {
@@ -136,7 +136,7 @@
     width: '20em',
     fontSize: '16px',
     lineHeight: '20px',
-    backgroundColor: 'rgba(0,0,0,0.875)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
     color: 'white',
     pointerEvents: 'none'
   };
@@ -179,21 +179,9 @@
         Object.assign(this.view.style, VIEW_STYLE);
         this.game.canvas.parentNode.append(this.view);
 
-        SCENE_EVENTS.forEach(function (eventName) {
-          if (eventName) {
-            this.eventHandlers[eventName] = function (sys) {
-              console.log(eventName, sys.settings.key);
-            };
-          }
-        }, this);
+        SCENE_EVENTS.forEach(this.createEventHandler, this);
 
-        SCENE_TRANSITION_EVENTS.forEach(function (eventName) {
-          if (eventName) {
-            this.transitionEventHandlers[eventName] = function (scene) {
-              console.log(eventName, scene.sys.settings.key);
-            };
-          }
-        }, this);
+        SCENE_TRANSITION_EVENTS.forEach(this.createTransitionEventHandler, this);
       }
     }, {
       key: 'start',
@@ -222,6 +210,22 @@
           this.view.textContent = output;
           this.output = output;
         }
+      }
+    }, {
+      key: 'createEventHandler',
+      value: function createEventHandler(name) {
+        this.eventHandlers[name] = function (arg) {
+          var sys = arg.sys || arg;
+
+          console.log(sys.settings.key, name);
+        };
+      }
+    }, {
+      key: 'createTransitionEventHandler',
+      value: function createTransitionEventHandler(name) {
+        this.transitionEventHandlers[name] = function (scene) {
+          console.log(scene.sys.settings.key, name);
+        };
       }
     }, {
       key: 'getOutput',
