@@ -1,4 +1,8 @@
-#### 3.1.1, 3.1.2, 3.1.3
+#### 3.1.4
+
+- Reverted Phaser dependency to ^3.16.2.
+
+#### 3.1.3
 
 - Updated dist script. It was omitted from v3.1.0 by mistake.
 
