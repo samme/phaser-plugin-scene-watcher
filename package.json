@@ -35,6 +35,6 @@
     "babel-preset-env": "^1.7.0"
   },
   "dependencies": {
-    "phaser": "^3.17.0"
+    "phaser": "^3.16.2"
   }
 }
