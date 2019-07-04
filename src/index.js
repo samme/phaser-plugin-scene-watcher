@@ -53,6 +53,7 @@ const VIEW_STYLE = {
   color: 'white',
   pointerEvents: 'none'
 };
+const VIEW_TITLE = 'Scene key; status, display list length; update list length';
 const ICONS = {
   [Phaser.Scenes.RUNNING]: ICON_RUNNING,
   [Phaser.Scenes.SLEEPING]: ICON_SLEEPING,
@@ -86,6 +87,8 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
   init () {
     this.view = document.createElement('pre');
+    // Doesn't show tooltip w/ { pointer-events: none }
+    this.view.title = VIEW_TITLE;
     Object.assign(this.view.style, VIEW_STYLE);
     this.game.canvas.parentNode.append(this.view);
 
