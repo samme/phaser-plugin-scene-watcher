@@ -140,8 +140,8 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   getSceneOutput (scene) {
-    return Pad(scene.sys.settings.key.substr(0, 12), 12, SPACE, PAD_LEFT) + SPACE +
-      getIcon(scene) + SPACE +
+    return SPACE + getIcon(scene) + SPACE +
+      Pad(scene.sys.settings.key.substr(0, 12), 12, SPACE, PAD_RIGHT) + 
       Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) +
       Pad(getDisplayListLength(scene), 4, SPACE, PAD_LEFT) +
       Pad(getUpdateListLength(scene), 4, SPACE, PAD_LEFT);
