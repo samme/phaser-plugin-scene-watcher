@@ -27,7 +27,18 @@ const SCENE_TRANSITION_EVENTS = [
   Phaser.Scenes.Events.TRANSITION_START,
   Phaser.Scenes.Events.TRANSITION_WAKE
 ].filter(Boolean);
-const SCENE_STATES = [ 'pending', 'init', 'start', 'loading', 'creating', 'running', 'paused', 'sleeping', 'shutdown', 'destroyed' ];
+const SCENE_STATES = [
+  'pending',
+  'init',
+  'start',
+  'loading',
+  'creating',
+  'running',
+  'paused',
+  'sleeping',
+  'shutdown',
+  'destroyed'
+];
 const SPACE = ' ';
 const VIEW_STYLE = {
   position: 'absolute',
