@@ -140,6 +140,7 @@
     color: 'white',
     pointerEvents: 'none'
   };
+  var VIEW_TITLE = 'Scene key; status, display list length; update list length';
   var ICONS = (_ICONS = {}, _defineProperty(_ICONS, _phaser2.default.Scenes.RUNNING, ICON_RUNNING), _defineProperty(_ICONS, _phaser2.default.Scenes.SLEEPING, ICON_SLEEPING), _defineProperty(_ICONS, _phaser2.default.Scenes.PAUSED, ICON_PAUSED), _ICONS);
 
   var getIcon = function getIcon(scene) {
@@ -176,6 +177,8 @@
       key: 'init',
       value: function init() {
         this.view = document.createElement('pre');
+        // Doesn't show tooltip w/ { pointer-events: none }
+        this.view.title = VIEW_TITLE;
         Object.assign(this.view.style, VIEW_STYLE);
         this.game.canvas.parentNode.append(this.view);
 
@@ -235,7 +238,7 @@
     }, {
       key: 'getSceneOutput',
       value: function getSceneOutput(scene) {
-        return Pad(scene.sys.settings.key.substr(0, 12), 12, SPACE, PAD_LEFT) + SPACE + getIcon(scene) + SPACE + Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) + Pad(getDisplayListLength(scene), 4, SPACE, PAD_LEFT) + Pad(getUpdateListLength(scene), 4, SPACE, PAD_LEFT);
+        return SPACE + getIcon(scene) + SPACE + Pad(scene.sys.settings.key.substr(0, 12), 12, SPACE, PAD_RIGHT) + Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) + Pad(getDisplayListLength(scene), 4, SPACE, PAD_LEFT) + Pad(getUpdateListLength(scene), 4, SPACE, PAD_LEFT);
       }
     }, {
       key: 'watchAll',
