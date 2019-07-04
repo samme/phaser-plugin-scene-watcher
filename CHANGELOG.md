@@ -1,3 +1,7 @@
+#### 3.2.0
+
+- Moved the scene status icon to the left.
+
 #### 3.1.4
 
 - Reverted Phaser dependency to ^3.16.2.
