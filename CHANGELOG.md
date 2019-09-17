@@ -1,3 +1,7 @@
+#### 3.2.1
+
+- Changed Phaser to a peer dependency.
+
 #### 3.2.0
 
 - Moved the scene status icon to the left.
@@ -14,7 +18,7 @@
 
 - Reduced transparency.
 - Reversed the order of arguments when logging scene events. Scene key is now first.
-- Updated Phaser dependency to 3.17.0. 
+- Updated Phaser dependency to 3.17.0.
 
 #### 3.0.1
 
