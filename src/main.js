@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 const Pad = Phaser.Utils.String.Pad;
-const ICON_DEFAULT = ' ';
+const ICON_OTHER = ' ';
 const ICON_PAUSED = '.';
 const ICON_RUNNING = '*';
 const ICON_SLEEPING = '-';
@@ -53,7 +53,7 @@ const VIEW_STYLE = {
   color: 'white',
   pointerEvents: 'none'
 };
-const VIEW_TITLE = 'Scene key; status, display list length; update list length';
+const VIEW_TITLE = 'Scenes: key; status; display list length; update list length';
 const ICONS = {
   [Phaser.Scenes.RUNNING]: ICON_RUNNING,
   [Phaser.Scenes.SLEEPING]: ICON_SLEEPING,
@@ -61,19 +61,11 @@ const ICONS = {
 };
 
 const getIcon = function (scene) {
-  return ICONS[scene.sys.settings.status] || ICON_DEFAULT;
+  return ICONS[scene.sys.settings.status] || ICON_OTHER;
 };
 
 const getStatus = function (scene) {
   return SCENE_STATES[scene.sys.settings.status];
-};
-
-const getDisplayListLength = function (scene) {
-  return scene.sys.updateList.length;
-};
-
-const getUpdateListLength = function (scene) {
-  return scene.sys.displayList.length;
 };
 
 export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
@@ -139,11 +131,13 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   getSceneOutput (scene) {
+    const { displayList, settings, updateList } = scene.sys;
+
     return SPACE + getIcon(scene) + SPACE +
-      Pad(scene.sys.settings.key.substr(0, 12), 12, SPACE, PAD_RIGHT) +
+      Pad(settings.key.substr(0, 12), 12, SPACE, PAD_RIGHT) +
       Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) +
-      Pad(getDisplayListLength(scene), 4, SPACE, PAD_LEFT) +
-      Pad(getUpdateListLength(scene), 4, SPACE, PAD_LEFT);
+      Pad(String(displayList.length), 4, SPACE, PAD_LEFT) +
+      Pad(String(updateList.length), 4, SPACE, PAD_LEFT);
   }
 
   watchAll () {
@@ -169,8 +163,4 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
       scene.events.off(eventName, this.eventHandlers[eventName], this);
     }
   }
-}
-
-if (typeof window !== 'undefined') {
-  window.PhaserSceneWatcherPlugin = SceneWatcherPlugin;
 }

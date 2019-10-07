@@ -2,17 +2,19 @@
   "name": "phaser-plugin-scene-watcher",
   "version": "3.2.2",
   "description": "Scene monitoring and debugging",
-  "main": "src/index.js",
+  "main": "dist/phaser-plugin-scene-watcher.cjs.js",
+  "module": "dist/phaser-plugin-scene-watcher.esm.js",
+  "browser": "dist/phaser-plugin-scene-watcher.umd.js",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "npx babel src/index.js -o dist/PhaserSceneWatcherPlugin.js",
-    "start": "npx babel src/index.js --watch -o dist/PhaserSceneWatcherPlugin.js",
-    "test": "npx eslint src/index.js",
-    "test:dist": "node -c dist/PhaserSceneWatcherPlugin.js",
-    "preversion": "npm run build && git add dist/PhaserSceneWatcherPlugin.js"
+    "build": "rollup -c",
+    "start": "rollup -c -w",
+    "test": "npx eslint src/main.js",
+    "test:dist": "node -c dist/phaser-plugin-scene-watcher.umd.js",
+    "preversion": "npm run build; npm run test:dist; git add dist"
   },
   "repository": {
     "type": "git",
@@ -31,16 +33,18 @@
   },
   "homepage": "https://github.com/samme/phaser-plugin-scene-watcher#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "eslint": "^6.5.1",
     "eslint-config-semistandard": "^15.0.0",
-    "eslint-config-standard": "^14.1.0",
+    "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "phaser": "^3.20.0"
+    "phaser": "^3.20.0",
+    "rollup": "^1.21.4",
+    "rollup-plugin-buble": "^0.19.8",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
   },
   "peerDependencies": {
     "phaser": "^3.16.2"

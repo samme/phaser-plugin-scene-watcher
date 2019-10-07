@@ -227,7 +227,7 @@ var config = {
   plugins: {
     global: [
       {
-        key: 'SceneWatcherPlugin',
+        key: 'SceneWatcher',
         plugin: PhaserSceneWatcherPlugin,
         start: true
       }
@@ -235,7 +235,7 @@ var config = {
   },
   callbacks: {
     postBoot: function (game) {
-      game.plugins.get('SceneWatcherPlugin').watchAll();
+      game.plugins.get('SceneWatcher').watchAll();
     }
   }
 };

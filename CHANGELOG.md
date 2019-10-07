@@ -1,3 +1,8 @@
+#### 4.0.0
+
+- There are now three script endpoints for `browser` (UMD), `module` (ES), and `main` (CommonJS).
+- The global `PhaserSceneWatcherPlugin` is now available only when using the browser/UMD script.
+
 #### 3.2.2
 
 - Fixed an error reading the update list length in Phaser v3.20.
