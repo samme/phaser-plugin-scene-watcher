@@ -1,23 +1,10 @@
 env:
   browser: true
   es6: true
-extends: 'eslint:recommended'
-parserOptions:
-  sourceType: module
+extends: 'semistandard'
 rules:
-  indent:
-    - error
-    - 2
-  linebreak-style:
-    - error
-    - unix
   no-console:
     - warn
     - allow:
       - log
-  quotes:
-    - error
-    - single
-  semi:
-    - error
-    - always
+
