@@ -18,7 +18,7 @@ const SCENE_EVENTS = [
   Phaser.Scenes.Events.SHUTDOWN,
   Phaser.Scenes.Events.SLEEP,
   Phaser.Scenes.Events.START,
-  Phaser.Scenes.Events.WAKE,
+  Phaser.Scenes.Events.WAKE
 ].filter(Boolean);
 const SCENE_TRANSITION_EVENTS = [
   Phaser.Scenes.Events.TRANSITION_COMPLETE,
@@ -77,7 +77,6 @@ const getUpdateListLength = function (scene) {
 };
 
 export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
-
   constructor (pluginManager) {
     super(pluginManager);
     this.eventHandlers = {};
@@ -124,7 +123,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   createEventHandler (name) {
     this.eventHandlers[name] = function (arg) {
       var sys = arg.sys || arg;
-      
+
       console.log(sys.settings.key, name);
     };
   }
@@ -141,7 +140,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
   getSceneOutput (scene) {
     return SPACE + getIcon(scene) + SPACE +
-      Pad(scene.sys.settings.key.substr(0, 12), 12, SPACE, PAD_RIGHT) + 
+      Pad(scene.sys.settings.key.substr(0, 12), 12, SPACE, PAD_RIGHT) +
       Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) +
       Pad(getDisplayListLength(scene), 4, SPACE, PAD_LEFT) +
       Pad(getUpdateListLength(scene), 4, SPACE, PAD_LEFT);
@@ -170,7 +169,6 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
       scene.events.off(eventName, this.eventHandlers[eventName], this);
     }
   }
-
 }
 
 if (typeof window !== 'undefined') {
