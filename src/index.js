@@ -151,11 +151,11 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   watch (scene) {
-    for (let eventName in this.eventHandlers) {
+    for (const eventName in this.eventHandlers) {
       scene.events.on(eventName, this.eventHandlers[eventName], this);
     }
 
-    for (let eventName in this.transitionEventHandlers) {
+    for (const eventName in this.transitionEventHandlers) {
       scene.events.on(eventName, this.transitionEventHandlers[eventName], this);
     }
   }
@@ -165,7 +165,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   unwatch (scene) {
-    for (let eventName in this.eventHandlers) {
+    for (const eventName in this.eventHandlers) {
       scene.events.off(eventName, this.eventHandlers[eventName], this);
     }
   }
