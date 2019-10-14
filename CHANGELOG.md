@@ -1,3 +1,7 @@
+#### 3.2.2
+
+- Fixed an error reading the update list length in Phaser v3.20.
+
 #### 3.2.1
 
 - Changed Phaser to a peer dependency.
