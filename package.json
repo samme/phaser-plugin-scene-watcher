@@ -33,7 +33,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "phaser": "^3.19.0"
+    "phaser": "^3.20.0"
   },
   "peerDependencies": {
     "phaser": "^3.16.2"
