@@ -69,7 +69,7 @@ const getStatus = function (scene) {
 };
 
 const getDisplayListLength = function (scene) {
-  return scene.sys.updateList._list.length;
+  return scene.sys.updateList.length;
 };
 
 const getUpdateListLength = function (scene) {
