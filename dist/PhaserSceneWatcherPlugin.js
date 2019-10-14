@@ -152,7 +152,7 @@
   };
 
   var getDisplayListLength = function getDisplayListLength(scene) {
-    return scene.sys.updateList._list.length;
+    return scene.sys.updateList.length;
   };
 
   var getUpdateListLength = function getUpdateListLength(scene) {

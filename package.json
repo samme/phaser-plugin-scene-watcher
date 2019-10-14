@@ -1,6 +1,6 @@
 {
   "name": "phaser-plugin-scene-watcher",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Scene monitoring and debugging",
   "main": "src/index.js",
   "files": [
