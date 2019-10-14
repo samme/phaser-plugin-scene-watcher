@@ -70,7 +70,7 @@ var Demo1 = new Phaser.Class({
     this.input.once(
       'pointerup',
       function () {
-        var t1 = this.scene.transition({
+        this.scene.transition({
           target: 'demo2',
           duration: 3000,
           moveAbove: true
@@ -107,16 +107,15 @@ var Demo2 = new Phaser.Class({
     this.events.on(
       'transitioncomplete',
       function () {
-        var particles = this.add.particles('flares');
-
-        var emitter = particles.createEmitter({
-          frame: ['red', 'blue', 'green', 'yellow'],
-          x: 400,
-          y: 300,
-          speed: 200,
-          lifespan: 3000,
-          blendMode: 'ADD'
-        });
+        this.add.particles('flares')
+          .createEmitter({
+            frame: ['red', 'blue', 'green', 'yellow'],
+            x: 400,
+            y: 300,
+            speed: 200,
+            lifespan: 3000,
+            blendMode: 'ADD'
+          });
       },
       this
     );
@@ -137,7 +136,7 @@ var Demo2 = new Phaser.Class({
     this.input.once(
       'pointerup',
       function (event) {
-        var t2 = this.scene.transition({
+        this.scene.transition({
           target: 'demo3',
           duration: 5000,
           moveBehind: true
@@ -204,7 +203,7 @@ var Demo3 = new Phaser.Class({
     this.input.once(
       'pointerup',
       function (event) {
-        var t3 = this.scene.transition({
+        this.scene.transition({
           target: 'demo1',
           duration: 5000,
           moveBelow: true,
