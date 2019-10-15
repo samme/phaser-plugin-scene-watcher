@@ -1,7 +1,7 @@
+extends: semistandard
 env:
   browser: true
   es6: true
-extends: 'semistandard'
 rules:
   no-console:
     - warn
