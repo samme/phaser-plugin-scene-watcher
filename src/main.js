@@ -5,6 +5,9 @@ const ICON_OTHER = ' ';
 const ICON_PAUSED = '.';
 const ICON_RUNNING = '*';
 const ICON_SLEEPING = '-';
+const ICON_ACTIVE = 'a';
+const ICON_VISIBLE = 'v';
+const ICON_INPUT = 'i';
 const NEWLINE = '\n';
 const PAD_LEFT = 1;
 const PAD_RIGHT = 2;
@@ -45,8 +48,8 @@ const VIEW_STYLE = {
   left: '0',
   top: '0',
   margin: '0',
-  padding: '0',
-  width: '20em',
+  padding: '0 0.5em',
+  width: '22.5em',
   fontSize: '16px',
   lineHeight: '20px',
   backgroundColor: 'rgba(0,0,0,0.8)',
@@ -66,6 +69,18 @@ const getIcon = function (scene) {
 
 const getStatus = function (scene) {
   return SCENE_STATES[scene.sys.settings.status];
+};
+
+const getActiveIcon = function (scene) {
+  return scene.sys.settings.active ? ICON_ACTIVE : ICON_OTHER;
+};
+
+const getVisibleIcon = function (scene) {
+  return scene.sys.settings.visible ? ICON_VISIBLE : ICON_OTHER;
+};
+
+const getInputIcon = function (scene) {
+  return scene.sys.input.isActive() ? ICON_INPUT : ICON_OTHER;
 };
 
 export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
@@ -133,11 +148,15 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   getSceneOutput (scene) {
     const { displayList, settings, updateList } = scene.sys;
 
-    return SPACE + getIcon(scene) + SPACE +
+    return Pad(getActiveIcon(scene), 2, SPACE, PAD_RIGHT) +
+      Pad(getVisibleIcon(scene), 2, SPACE, PAD_RIGHT) +
+      Pad(getInputIcon(scene), 2, SPACE, PAD_RIGHT) +
+      Pad(getIcon(scene), 2, SPACE, PAD_RIGHT) +
       Pad(settings.key.substr(0, 12), 12, SPACE, PAD_RIGHT) +
       Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) +
       Pad(String(displayList.length), 4, SPACE, PAD_LEFT) +
-      Pad(String(updateList.length), 4, SPACE, PAD_LEFT);
+      Pad(String(updateList.length), 4, SPACE, PAD_LEFT)
+    ;
   }
 
   watchAll () {
