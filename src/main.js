@@ -65,11 +65,9 @@ const ICONS = {
   [Phaser.Scenes.SLEEPING]: ICON_SLEEPING,
   [Phaser.Scenes.PAUSED]: ICON_PAUSED
 };
-// const RULE = Pad('', 44, '-');
-const RULE = '';
 
-const getColHead = function (col) {
-  return Pad(col.name.substring(0, col.width - 1), col.width, SPACE, col.pad);
+const Fit = function (val, width, dir) {
+  return Pad(String(val).substr(0, width), width, SPACE, dir);
 };
 
 const getIcon = function (scene) {
@@ -111,14 +109,16 @@ const getKeyboardIcon = function (scene) {
 const COLS = [
   { name: 'icon', width: 2, pad: ALIGN_LEFT, output: getIcon },
   { name: 'key', width: 12, pad: ALIGN_LEFT, output: getKey },
-  { name: 'status', width: 8, pad: ALIGN_LEFT, output: getStatus },
-  { name: 'display', width: 8, pad: ALIGN_RIGHT, output: getDisplayListLength },
-  { name: 'update', width: 8, pad: ALIGN_RIGHT, output: getUpdateListLength },
-  { name: 'input', width: 4, pad: ALIGN_RIGHT, output: getInputIcon },
-  { name: 'keyboard', width: 4, pad: ALIGN_RIGHT, output: getKeyboardIcon }
+  { name: 'status', width: 10, pad: ALIGN_LEFT, output: getStatus },
+  { name: 'display', width: 4, pad: ALIGN_RIGHT, output: getDisplayListLength },
+  { name: 'update', width: 4, pad: ALIGN_RIGHT, output: getUpdateListLength },
+  { name: 'active', width: 2, pad: ALIGN_RIGHT, output: getActiveIcon },
+  { name: 'visible', width: 2, pad: ALIGN_RIGHT, output: getVisibleIcon },
+  { name: 'input', width: 2, pad: ALIGN_RIGHT, output: getInputIcon },
+  { name: 'keyboard', width: 2, pad: ALIGN_RIGHT, output: getKeyboardIcon }
 ];
 
-console.table(COLS);
+// console.table(COLS);
 
 export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   constructor (pluginManager) {
@@ -175,11 +175,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   getOutput () {
-    return [
-      COLS.map(getColHead).join(EMPTY),
-      RULE,
-      ...this.game.scene.scenes.map(this.getSceneOutput, this)
-    ].join(NEWLINE);
+    return this.game.scene.scenes.map(this.getSceneOutput, this).join(NEWLINE);
   }
 
   getSceneOutput (scene) {
@@ -187,7 +183,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   getColOutput (col, scene) {
-    return Pad(String(col.output(scene)), col.width, SPACE, col.pad);
+    return Fit(col.output(scene), col.width, col.pad);
   }
 
   watchAll () {
@@ -212,5 +208,9 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
     for (const eventName in this.eventHandlers) {
       scene.events.off(eventName, this.eventHandlers[eventName], this);
     }
+  }
+
+  print () {
+    console.log('%c' + this.getOutput(), 'font-family: monospace; white-space: pre');
   }
 }
