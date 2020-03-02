@@ -236,6 +236,7 @@ var config = {
   callbacks: {
     postBoot: function (game) {
       game.plugins.get('SceneWatcher').watchAll();
+      game.plugins.get('SceneWatcher').print();
     }
   }
 };
