@@ -1,3 +1,9 @@
+#### 4.1.0
+
+- Added columns for scene active, visible, input enabled, and keyboard enabled.
+- Added `print()` method. It prints the table output to the console.
+- Resized the columns.
+
 #### 4.0.0
 
 - There are now three script endpoints for `browser` (UMD), `module` (ES), and `main` (CommonJS).
