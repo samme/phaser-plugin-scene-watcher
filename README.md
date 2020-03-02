@@ -3,12 +3,16 @@
 Phaser 3 Scene Watcher Plugin
 =============================
 
-For each scene, it shows:
+For each scene, it shows (left to right):
 
 1. key
 2. status
 3. display list count
 4. update list count
+5. active (a)
+6. visible (v)
+7. input enabled (i)
+8. keyboard input enabled (k)
 
 See the [demo](https://codepen.io/samme/pen/VBbJZM) or [Cavern Quest](https://samme.itch.io/cavern-quest).
 
@@ -19,13 +23,11 @@ Use [phaser-plugin-scene-watcher.umd.js](dist/phaser-plugin-scene-watcher.umd.js
 
 ```javascript
 new Phaser.Game({
-  // ...
   plugins: {
     global: [
       { key: 'SceneWatcher', plugin: PhaserSceneWatcherPlugin, start: true }
     ]
   },
-  // ...
 });
 ```
 
@@ -38,13 +40,11 @@ Use [phaser-plugin-scene-watcher.esm.js](dist/phaser-plugin-scene-watcher.esm.js
 import SceneWatcherPlugin from 'phaser-plugin-scene-watcher';
 
 new Phaser.Game({
-  // ...
   plugins: {
     global: [
       { key: 'SceneWatcher', plugin: SceneWatcherPlugin, start: true }
     ]
   },
-  // ...
 });
 ```
 
@@ -63,13 +63,11 @@ From the game configuration:
 
 ```javascript
 new Phaser.Game({
-  // ...
   callbacks: {
     postBoot: function (game) {
       game.plugins.get('SceneWatcher').watchAll();
     }
   }
-  // ...
 });
 ```
 
