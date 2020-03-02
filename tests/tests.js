@@ -144,6 +144,8 @@ var Demo2 = new Phaser.Class({
       },
       this
     );
+
+    this.sceneWatcher.print();
   }
 });
 
@@ -229,7 +231,8 @@ var config = {
       {
         key: 'SceneWatcher',
         plugin: PhaserSceneWatcherPlugin,
-        start: true
+        start: true,
+        mapping: 'sceneWatcher'
       }
     ]
   },
