@@ -1,5 +1,3 @@
-![Preview](https://i.imgur.com/Xa9HxrU.png)
-
 Phaser 3 Scene Watcher Plugin
 =============================
 
@@ -25,16 +23,18 @@ Use [phaser-plugin-scene-watcher.umd.js](dist/phaser-plugin-scene-watcher.umd.js
 new Phaser.Game({
   plugins: {
     global: [
-      { key: 'SceneWatcher', plugin: PhaserSceneWatcherPlugin, start: true }
+      { key: 'SceneWatcher', plugin: PhaserSceneWatcherPlugin, start: true, mapping: 'sceneWatcher' }
     ]
   },
 });
 ```
 
-Modules
--------
+`mapping` is optional.
 
-Use [phaser-plugin-scene-watcher.esm.js](dist/phaser-plugin-scene-watcher.esm.js) (ES) or [phaser-plugin-scene-watcher.cjs.js](dist/phaser-plugin-scene-watcher.cjs.js) (CommonJS) and the plugin's default export:
+Module
+------
+
+Use [phaser-plugin-scene-watcher.esm.js](dist/phaser-plugin-scene-watcher.esm.js) and the plugin's default export:
 
 ```javascript
 import SceneWatcherPlugin from 'phaser-plugin-scene-watcher';
@@ -43,6 +43,21 @@ new Phaser.Game({
   plugins: {
     global: [
       { key: 'SceneWatcher', plugin: SceneWatcherPlugin, start: true }
+    ]
+  },
+});
+```
+
+CommonJS
+--------
+
+Use [phaser-plugin-scene-watcher.cjs.js](dist/phaser-plugin-scene-watcher.cjs.js) and the plugin's default export:
+
+```javascript
+new Phaser.Game({
+  plugins: {
+    global: [
+      { key: 'SceneWatcher', plugin: require('phaser-plugin-scene-watcher'), start: true }
     ]
   },
 });
