@@ -46,7 +46,7 @@ const VIEW_STYLE = {
   top: '0',
   margin: '0',
   padding: '0',
-  width: '20em',
+  width: '25em',
   fontSize: '16px',
   lineHeight: '20px',
   backgroundColor: 'rgba(0,0,0,0.8)',
@@ -114,9 +114,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
   createEventHandler (name) {
     this.eventHandlers[name] = function (arg) {
-      var sys = arg.sys || arg;
-
-      console.log(sys.settings.key, name);
+      console.log((arg.sys || arg).settings.key, name);
     };
   }
 
@@ -133,11 +131,11 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   getSceneOutput (scene) {
     const { displayList, settings, updateList } = scene.sys;
 
-    return SPACE + getIcon(scene) + SPACE +
-      Pad(settings.key.substr(0, 12), 12, SPACE, PAD_RIGHT) +
+    return getIcon(scene) + SPACE +
+      Pad(settings.key.substr(0, 19), 20, SPACE, PAD_RIGHT) +
       Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) +
-      Pad(String(displayList.length), 4, SPACE, PAD_LEFT) +
-      Pad(String(updateList.length), 4, SPACE, PAD_LEFT);
+      Pad(String(displayList.length), 5, SPACE, PAD_LEFT) +
+      Pad(String(updateList.length), 5, SPACE, PAD_LEFT);
   }
 
   watchAll () {
