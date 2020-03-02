@@ -5,9 +5,16 @@ var ICON_OTHER = ' ';
 var ICON_PAUSED = '.';
 var ICON_RUNNING = '*';
 var ICON_SLEEPING = '-';
+var ICON_ACTIVE = 'a';
+var ICON_VISIBLE = 'v';
+var ICON_INPUT = 'i';
+var ICON_KEYBOARD = 'k';
 var NEWLINE = '\n';
+var EMPTY = '';
 var PAD_LEFT = 1;
 var PAD_RIGHT = 2;
+var ALIGN_LEFT = PAD_RIGHT;
+var ALIGN_RIGHT = PAD_LEFT;
 var SCENE_EVENTS = [
   Phaser.Scenes.Events.BOOT,
   Phaser.Scenes.Events.CREATE,
@@ -46,26 +53,71 @@ var VIEW_STYLE = {
   top: '0',
   margin: '0',
   padding: '0',
-  width: '20em',
+  width: '25em',
   fontSize: '16px',
   lineHeight: '20px',
   backgroundColor: 'rgba(0,0,0,0.8)',
   color: 'white',
   pointerEvents: 'none'
 };
-var VIEW_TITLE = 'Scenes: key; status; display list length; update list length';
 var ICONS = {};
 ICONS[Phaser.Scenes.RUNNING] = ICON_RUNNING;
 ICONS[Phaser.Scenes.SLEEPING] = ICON_SLEEPING;
 ICONS[Phaser.Scenes.PAUSED] = ICON_PAUSED;
 
+var Fit = function (val, width, dir) {
+  return Pad(String(val).substr(0, width), width, SPACE, dir);
+};
+
 var getIcon = function (scene) {
   return ICONS[scene.sys.settings.status] || ICON_OTHER;
+};
+
+var getKey = function (scene) {
+  return scene.sys.settings.key;
 };
 
 var getStatus = function (scene) {
   return SCENE_STATES[scene.sys.settings.status];
 };
+
+var getDisplayListLength = function (scene) {
+  return scene.sys.displayList.length;
+};
+
+var getUpdateListLength = function (scene) {
+  return scene.sys.updateList.length;
+};
+
+var getActiveIcon = function (scene) {
+  return scene.sys.settings.active ? ICON_ACTIVE : ICON_OTHER;
+};
+
+var getVisibleIcon = function (scene) {
+  return scene.sys.settings.visible ? ICON_VISIBLE : ICON_OTHER;
+};
+
+var getInputIcon = function (scene) {
+  return scene.sys.input.isActive() ? ICON_INPUT : ICON_OTHER;
+};
+
+var getKeyboardIcon = function (scene) {
+  return scene.sys.input.keyboard.isActive() ? ICON_KEYBOARD : ICON_OTHER;
+};
+
+var COLS = [
+  { name: 'icon', width: 2, pad: ALIGN_LEFT, output: getIcon },
+  { name: 'key', width: 12, pad: ALIGN_LEFT, output: getKey },
+  { name: 'status', width: 10, pad: ALIGN_LEFT, output: getStatus },
+  { name: 'display', width: 4, pad: ALIGN_RIGHT, output: getDisplayListLength },
+  { name: 'update', width: 4, pad: ALIGN_RIGHT, output: getUpdateListLength },
+  { name: 'active', width: 2, pad: ALIGN_RIGHT, output: getActiveIcon },
+  { name: 'visible', width: 2, pad: ALIGN_RIGHT, output: getVisibleIcon },
+  { name: 'input', width: 2, pad: ALIGN_RIGHT, output: getInputIcon },
+  { name: 'keyboard', width: 2, pad: ALIGN_RIGHT, output: getKeyboardIcon }
+];
+
+// console.table(COLS);
 
 var SceneWatcherPlugin = /*@__PURE__*/(function (superclass) {
   function SceneWatcherPlugin (pluginManager) {
@@ -81,8 +133,6 @@ var SceneWatcherPlugin = /*@__PURE__*/(function (superclass) {
 
   SceneWatcherPlugin.prototype.init = function init () {
     this.view = document.createElement('pre');
-    // Doesn't show tooltip w/ { pointer-events: none }
-    this.view.title = VIEW_TITLE;
     Object.assign(this.view.style, VIEW_STYLE);
     this.game.canvas.parentNode.append(this.view);
 
@@ -117,9 +167,7 @@ var SceneWatcherPlugin = /*@__PURE__*/(function (superclass) {
 
   SceneWatcherPlugin.prototype.createEventHandler = function createEventHandler (name) {
     this.eventHandlers[name] = function (arg) {
-      var sys = arg.sys || arg;
-
-      console.log(sys.settings.key, name);
+      console.log((arg.sys || arg).settings.key, name);
     };
   };
 
@@ -134,16 +182,11 @@ var SceneWatcherPlugin = /*@__PURE__*/(function (superclass) {
   };
 
   SceneWatcherPlugin.prototype.getSceneOutput = function getSceneOutput (scene) {
-    var ref = scene.sys;
-    var displayList = ref.displayList;
-    var settings = ref.settings;
-    var updateList = ref.updateList;
+    return COLS.map(function (col) { return this.getColOutput(col, scene); }, this).join(EMPTY);
+  };
 
-    return SPACE + getIcon(scene) + SPACE +
-      Pad(settings.key.substr(0, 12), 12, SPACE, PAD_RIGHT) +
-      Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) +
-      Pad(String(displayList.length), 4, SPACE, PAD_LEFT) +
-      Pad(String(updateList.length), 4, SPACE, PAD_LEFT);
+  SceneWatcherPlugin.prototype.getColOutput = function getColOutput (col, scene) {
+    return Fit(col.output(scene), col.width, col.pad);
   };
 
   SceneWatcherPlugin.prototype.watchAll = function watchAll () {
@@ -168,6 +211,10 @@ var SceneWatcherPlugin = /*@__PURE__*/(function (superclass) {
     for (var eventName in this.eventHandlers) {
       scene.events.off(eventName, this.eventHandlers[eventName], this);
     }
+  };
+
+  SceneWatcherPlugin.prototype.print = function print () {
+    console.log('%c' + this.getOutput(), 'font-family: monospace; white-space: pre');
   };
 
   return SceneWatcherPlugin;
