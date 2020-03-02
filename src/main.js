@@ -8,9 +8,13 @@ const ICON_SLEEPING = '-';
 const ICON_ACTIVE = 'a';
 const ICON_VISIBLE = 'v';
 const ICON_INPUT = 'i';
+const ICON_KEYBOARD = 'k';
 const NEWLINE = '\n';
+const EMPTY = '';
 const PAD_LEFT = 1;
 const PAD_RIGHT = 2;
+const ALIGN_LEFT = PAD_RIGHT;
+const ALIGN_RIGHT = PAD_LEFT;
 const SCENE_EVENTS = [
   Phaser.Scenes.Events.BOOT,
   Phaser.Scenes.Events.CREATE,
@@ -56,19 +60,36 @@ const VIEW_STYLE = {
   color: 'white',
   pointerEvents: 'none'
 };
-const VIEW_TITLE = 'Scenes: key; status; display list length; update list length';
 const ICONS = {
   [Phaser.Scenes.RUNNING]: ICON_RUNNING,
   [Phaser.Scenes.SLEEPING]: ICON_SLEEPING,
   [Phaser.Scenes.PAUSED]: ICON_PAUSED
+};
+// const RULE = Pad('', 44, '-');
+const RULE = '';
+
+const getColHead = function (col) {
+  return Pad(col.name.substring(0, col.width - 1), col.width, SPACE, col.pad);
 };
 
 const getIcon = function (scene) {
   return ICONS[scene.sys.settings.status] || ICON_OTHER;
 };
 
+const getKey = function (scene) {
+  return scene.sys.settings.key;
+};
+
 const getStatus = function (scene) {
   return SCENE_STATES[scene.sys.settings.status];
+};
+
+const getDisplayListLength = function (scene) {
+  return scene.sys.displayList.length;
+};
+
+const getUpdateListLength = function (scene) {
+  return scene.sys.updateList.length;
 };
 
 const getActiveIcon = function (scene) {
@@ -83,6 +104,22 @@ const getInputIcon = function (scene) {
   return scene.sys.input.isActive() ? ICON_INPUT : ICON_OTHER;
 };
 
+const getKeyboardIcon = function (scene) {
+  return scene.sys.input.keyboard.isActive() ? ICON_KEYBOARD : ICON_OTHER;
+};
+
+const COLS = [
+  { name: 'icon', width: 2, pad: ALIGN_LEFT, output: getIcon },
+  { name: 'key', width: 12, pad: ALIGN_LEFT, output: getKey },
+  { name: 'status', width: 8, pad: ALIGN_LEFT, output: getStatus },
+  { name: 'display', width: 8, pad: ALIGN_RIGHT, output: getDisplayListLength },
+  { name: 'update', width: 8, pad: ALIGN_RIGHT, output: getUpdateListLength },
+  { name: 'input', width: 4, pad: ALIGN_RIGHT, output: getInputIcon },
+  { name: 'keyboard', width: 4, pad: ALIGN_RIGHT, output: getKeyboardIcon }
+];
+
+console.table(COLS);
+
 export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   constructor (pluginManager) {
     super(pluginManager);
@@ -93,8 +130,6 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
   init () {
     this.view = document.createElement('pre');
-    // Doesn't show tooltip w/ { pointer-events: none }
-    this.view.title = VIEW_TITLE;
     Object.assign(this.view.style, VIEW_STYLE);
     this.game.canvas.parentNode.append(this.view);
 
@@ -140,21 +175,19 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   getOutput () {
-    return this.game.scene.scenes.map(this.getSceneOutput, this).join(NEWLINE);
+    return [
+      COLS.map(getColHead).join(EMPTY),
+      RULE,
+      ...this.game.scene.scenes.map(this.getSceneOutput, this)
+    ].join(NEWLINE);
   }
 
   getSceneOutput (scene) {
-    const { displayList, settings, updateList } = scene.sys;
+    return COLS.map(function (col) { return this.getColOutput(col, scene); }, this).join(EMPTY);
+  }
 
-    return Pad(getActiveIcon(scene), 2, SPACE, PAD_RIGHT) +
-      Pad(getVisibleIcon(scene), 2, SPACE, PAD_RIGHT) +
-      Pad(getInputIcon(scene), 2, SPACE, PAD_RIGHT) +
-      Pad(getIcon(scene), 2, SPACE, PAD_RIGHT) +
-      Pad(settings.key.substr(0, 19), 20, SPACE, PAD_RIGHT) +
-      Pad(getStatus(scene), 8, SPACE, PAD_RIGHT) +
-      Pad(String(displayList.length), 5, SPACE, PAD_LEFT) +
-      Pad(String(updateList.length), 5, SPACE, PAD_LEFT)
-    ;
+  getColOutput (col, scene) {
+    return Pad(String(col.output(scene)), col.width, SPACE, col.pad);
   }
 
   watchAll () {
