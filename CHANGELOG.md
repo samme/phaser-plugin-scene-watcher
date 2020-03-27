@@ -1,3 +1,7 @@
+#### 4.2.0
+
+- Added column for scene transitioning.
+
 #### 4.1.0
 
 - Added columns for scene active, visible, input enabled, and keyboard enabled.
