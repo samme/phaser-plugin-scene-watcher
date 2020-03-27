@@ -1,3 +1,5 @@
+![Screenshot](./preview.png)
+
 Phaser 3 Scene Watcher Plugin
 =============================
 
@@ -9,8 +11,9 @@ For each scene, it shows (left to right):
 4. update list count
 5. active (a)
 6. visible (v)
-7. input enabled (i)
-8. keyboard input enabled (k)
+7. transitioning (t)
+8. input enabled (i)
+9. keyboard input enabled (k)
 
 See the [demo](https://codepen.io/samme/pen/VBbJZM) or [Cavern Quest](https://samme.itch.io/cavern-quest).
 
