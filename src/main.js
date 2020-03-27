@@ -7,6 +7,7 @@ const ICON_RUNNING = '*';
 const ICON_SLEEPING = '-';
 const ICON_ACTIVE = 'a';
 const ICON_VISIBLE = 'v';
+const ICON_TRANSITIONING = 't';
 const ICON_INPUT = 'i';
 const ICON_KEYBOARD = 'k';
 const NEWLINE = '\n';
@@ -53,7 +54,7 @@ const VIEW_STYLE = {
   top: '0',
   margin: '0',
   padding: '0',
-  width: '25em',
+  width: '30em',
   fontSize: '16px',
   lineHeight: '20px',
   backgroundColor: 'rgba(0,0,0,0.8)',
@@ -98,6 +99,10 @@ const getVisibleIcon = function (scene) {
   return scene.sys.settings.visible ? ICON_VISIBLE : ICON_OTHER;
 };
 
+const getTransitioningIcon = function (scene) {
+  return scene.sys.settings.isTransition ? ICON_TRANSITIONING : ICON_OTHER;
+};
+
 const getInputIcon = function (scene) {
   return scene.sys.input.isActive() ? ICON_INPUT : ICON_OTHER;
 };
@@ -108,12 +113,13 @@ const getKeyboardIcon = function (scene) {
 
 const COLS = [
   { name: 'icon', width: 2, pad: ALIGN_LEFT, output: getIcon },
-  { name: 'key', width: 12, pad: ALIGN_LEFT, output: getKey },
+  { name: 'key', width: 18, pad: ALIGN_LEFT, output: getKey },
   { name: 'status', width: 10, pad: ALIGN_LEFT, output: getStatus },
   { name: 'display', width: 4, pad: ALIGN_RIGHT, output: getDisplayListLength },
   { name: 'update', width: 4, pad: ALIGN_RIGHT, output: getUpdateListLength },
   { name: 'active', width: 2, pad: ALIGN_RIGHT, output: getActiveIcon },
   { name: 'visible', width: 2, pad: ALIGN_RIGHT, output: getVisibleIcon },
+  { name: 'transitioning', width: 2, pad: ALIGN_RIGHT, output: getTransitioningIcon },
   { name: 'input', width: 2, pad: ALIGN_RIGHT, output: getInputIcon },
   { name: 'keyboard', width: 2, pad: ALIGN_RIGHT, output: getKeyboardIcon }
 ];
