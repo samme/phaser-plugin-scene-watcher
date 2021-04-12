@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/samme/phaser-plugin-scene-watcher#readme",
   "devDependencies": {
+    "acorn": "^6.4.1",
     "eslint": "^6.5.1",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^13.0.1",
