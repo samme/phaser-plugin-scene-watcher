@@ -69,6 +69,8 @@ new Phaser.Game({
 Log scene events to console
 ---------------------------
 
+`watchAll()` starts logging scene events for all existing scenes. Call it once after all scenes are added.
+
 From a scene:
 
 ```javascript
