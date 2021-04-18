@@ -35,18 +35,18 @@ var SCENE_TRANSITION_EVENTS = [
   Phaser.Scenes.Events.TRANSITION_START,
   Phaser.Scenes.Events.TRANSITION_WAKE
 ].filter(Boolean);
-var SCENE_STATES = [
-  'pending',
-  'init',
-  'start',
-  'loading',
-  'creating',
-  'running',
-  'paused',
-  'sleeping',
-  'shutdown',
-  'destroyed'
-];
+var SCENE_STATES = {
+  0: 'pending',
+  1: 'init',
+  2: 'start',
+  3: 'loading',
+  4: 'creating',
+  5: 'running',
+  6: 'paused',
+  7: 'sleeping',
+  8: 'shutdown',
+  9: 'destroyed'
+};
 var SPACE = ' ';
 var VIEW_STYLE = {
   position: 'absolute',
