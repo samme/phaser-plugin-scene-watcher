@@ -1,3 +1,7 @@
+#### 5.0.0
+
+- Removed the `main` (CommonJS) script. You can still use the UMD script as a CommonJS import if you need to.
+
 #### 4.2.0
 
 - Added column for scene transitioning.
