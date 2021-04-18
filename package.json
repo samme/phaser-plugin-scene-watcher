@@ -2,7 +2,6 @@
   "name": "phaser-plugin-scene-watcher",
   "version": "4.2.0",
   "description": "Scene monitoring and debugging",
-  "main": "dist/phaser-plugin-scene-watcher.cjs.js",
   "module": "dist/phaser-plugin-scene-watcher.esm.js",
   "browser": "dist/phaser-plugin-scene-watcher.umd.js",
   "files": [
