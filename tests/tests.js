@@ -1,5 +1,5 @@
 console.assert(Phaser, 'Phaser');
-console.assert(Phaser.VERSION === '3.21.0', 'Phaser v3.21.0');
+console.assert(Phaser.VERSION === '3.54.0', 'Phaser v3.54.0', Phaser.VERSION);
 console.assert(PhaserSceneWatcherPlugin, 'PhaserSceneWatcherPlugin');
 
 var Preloader = new Phaser.Class({
