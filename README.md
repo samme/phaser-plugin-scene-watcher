@@ -12,27 +12,26 @@ For each scene, it shows (left to right):
 5. active (a)
 6. visible (v)
 7. transitioning (t)
-8. input enabled (i)
-9. keyboard input enabled (k)
+8. [input active](https://photonstorm.github.io/phaser3-docs/Phaser.Input.InputPlugin.html#isActive) (i)
+9. [keyboard input active](https://photonstorm.github.io/phaser3-docs/Phaser.Input.Keyboard.KeyboardPlugin.html#isActive) (k)
 
 See the [demo](https://codepen.io/samme/pen/VBbJZM) or [Cavern Quest](https://samme.itch.io/cavern-quest).
 
-Browser
--------
+Browser / UMD
+-------------
 
 Use [phaser-plugin-scene-watcher.umd.js](dist/phaser-plugin-scene-watcher.umd.js) and the global `PhaserSceneWatcherPlugin`.
 
 ```javascript
+/* global PhaserSceneWatcherPlugin */
 new Phaser.Game({
   plugins: {
     global: [
-      { key: 'SceneWatcher', plugin: PhaserSceneWatcherPlugin, start: true, mapping: 'sceneWatcher' }
+      { key: 'SceneWatcher', plugin: PhaserSceneWatcherPlugin, start: true }
     ]
   },
 });
 ```
-
-`mapping` is optional.
 
 Module
 ------
@@ -51,33 +50,10 @@ new Phaser.Game({
 });
 ```
 
-CommonJS
---------
-
-Use [phaser-plugin-scene-watcher.cjs.js](dist/phaser-plugin-scene-watcher.cjs.js) and the plugin's default export:
-
-```javascript
-new Phaser.Game({
-  plugins: {
-    global: [
-      { key: 'SceneWatcher', plugin: require('phaser-plugin-scene-watcher'), start: true }
-    ]
-  },
-});
-```
-
 Log scene events to console
 ---------------------------
 
 `watchAll()` starts logging scene events for all existing scenes. Call it once after all scenes are added.
-
-From a scene:
-
-```javascript
-init () {
-  this.plugins.get('SceneWatcher').watchAll();
-}
-```
 
 From the game configuration:
 
@@ -92,3 +68,11 @@ new Phaser.Game({
 ```
 
 Use the same `key` that you added the plugin with.
+
+From a scene:
+
+```javascript
+init () {
+  this.plugins.get('SceneWatcher').watchAll();
+}
+```
