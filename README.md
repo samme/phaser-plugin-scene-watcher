@@ -67,12 +67,12 @@ new Phaser.Game({
 });
 ```
 
-Use the same `key` that you added the plugin with.
-
 From a scene:
 
 ```javascript
-init () {
+function init () {
   this.plugins.get('SceneWatcher').watchAll();
 }
 ```
+
+Use the same `key` that you added the plugin with.
