@@ -103,11 +103,25 @@ var getTransitioningIcon = function (scene) {
 };
 
 var getInputIcon = function (scene) {
-  return scene.sys.input.isActive() ? ICON_INPUT : ICON_OTHER;
+  return isSceneInputActive(scene) ? ICON_INPUT : ICON_OTHER;
 };
 
 var getKeyboardIcon = function (scene) {
-  return scene.sys.input.keyboard.isActive() ? ICON_KEYBOARD : ICON_OTHER;
+  return isSceneKeyboardActive(scene) ? ICON_KEYBOARD : ICON_OTHER;
+};
+
+var isSceneInputActive = function (scene) {
+  var ref = scene.sys;
+  var input = ref.input;
+
+  return Boolean(input && input.isActive());
+};
+
+var isSceneKeyboardActive = function (scene) {
+  var ref = scene.sys;
+  var input = ref.input;
+
+  return Boolean(input && input.keyboard && input.keyboard.isActive());
 };
 
 var COLS = [
@@ -201,11 +215,11 @@ var SceneWatcherPlugin = /*@__PURE__*/(function (superclass) {
 
   SceneWatcherPlugin.prototype.watch = function watch (scene) {
     for (var eventName in this.eventHandlers) {
-      scene.events.on(eventName, this.eventHandlers[eventName], this);
+      scene.sys.events.on(eventName, this.eventHandlers[eventName], this);
     }
 
     for (var eventName$1 in this.transitionEventHandlers) {
-      scene.events.on(eventName$1, this.transitionEventHandlers[eventName$1], this);
+      scene.sys.events.on(eventName$1, this.transitionEventHandlers[eventName$1], this);
     }
   };
 
@@ -215,7 +229,7 @@ var SceneWatcherPlugin = /*@__PURE__*/(function (superclass) {
 
   SceneWatcherPlugin.prototype.unwatch = function unwatch (scene) {
     for (var eventName in this.eventHandlers) {
-      scene.events.off(eventName, this.eventHandlers[eventName], this);
+      scene.sys.events.off(eventName, this.eventHandlers[eventName], this);
     }
   };
 
