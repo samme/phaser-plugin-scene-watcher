@@ -104,11 +104,23 @@ const getTransitioningIcon = function (scene) {
 };
 
 const getInputIcon = function (scene) {
-  return scene.sys.input.isActive() ? ICON_INPUT : ICON_OTHER;
+  return isSceneInputActive(scene) ? ICON_INPUT : ICON_OTHER;
 };
 
 const getKeyboardIcon = function (scene) {
-  return scene.sys.input.keyboard.isActive() ? ICON_KEYBOARD : ICON_OTHER;
+  return isSceneKeyboardActive(scene) ? ICON_KEYBOARD : ICON_OTHER;
+};
+
+const isSceneInputActive = function (scene) {
+  const { input } = scene.sys;
+
+  return Boolean(input && input.isActive());
+};
+
+const isSceneKeyboardActive = function (scene) {
+  const { input } = scene.sys;
+
+  return Boolean(input && input.keyboard && input.keyboard.isActive());
 };
 
 const COLS = [
@@ -198,11 +210,11 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
   watch (scene) {
     for (const eventName in this.eventHandlers) {
-      scene.events.on(eventName, this.eventHandlers[eventName], this);
+      scene.sys.events.on(eventName, this.eventHandlers[eventName], this);
     }
 
     for (const eventName in this.transitionEventHandlers) {
-      scene.events.on(eventName, this.transitionEventHandlers[eventName], this);
+      scene.sys.events.on(eventName, this.transitionEventHandlers[eventName], this);
     }
   }
 
@@ -212,7 +224,7 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
   unwatch (scene) {
     for (const eventName in this.eventHandlers) {
-      scene.events.off(eventName, this.eventHandlers[eventName], this);
+      scene.sys.events.off(eventName, this.eventHandlers[eventName], this);
     }
   }
 
