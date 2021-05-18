@@ -1,3 +1,8 @@
+#### 5.0.1
+
+- Fixed an error when a scene had custom plugin mappings.
+- Fixed an error when a scene had no input plugin.
+
 #### 5.0.0
 
 - Removed the `main` (CommonJS) script. You can still use the UMD script as a CommonJS import if you need to.
