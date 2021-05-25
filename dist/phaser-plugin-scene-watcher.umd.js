@@ -193,13 +193,13 @@
 
     SceneWatcherPlugin.prototype.createEventHandler = function createEventHandler (name) {
       this.eventHandlers[name] = function (arg) {
-        console.log((arg.sys || arg).settings.key, name);
+        console.info(name, (arg.sys || arg).settings.key);
       };
     };
 
     SceneWatcherPlugin.prototype.createTransitionEventHandler = function createTransitionEventHandler (name) {
       this.transitionEventHandlers[name] = function (scene) {
-        console.log(scene.sys.settings.key, name);
+        console.info(name, scene.sys.settings.key);
       };
     };
 
@@ -240,7 +240,7 @@
     };
 
     SceneWatcherPlugin.prototype.print = function print () {
-      console.log('%c' + this.getOutput(), 'font-family: monospace; white-space: pre');
+      console.info('%c' + this.getOutput(), 'font-family: monospace; white-space: pre');
     };
 
     return SceneWatcherPlugin;
