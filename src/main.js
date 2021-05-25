@@ -182,13 +182,13 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
 
   createEventHandler (name) {
     this.eventHandlers[name] = function (arg) {
-      console.log((arg.sys || arg).settings.key, name);
+      console.info(name, (arg.sys || arg).settings.key);
     };
   }
 
   createTransitionEventHandler (name) {
     this.transitionEventHandlers[name] = function (scene) {
-      console.log(scene.sys.settings.key, name);
+      console.info(name, scene.sys.settings.key);
     };
   }
 
@@ -229,6 +229,6 @@ export default class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
   }
 
   print () {
-    console.log('%c' + this.getOutput(), 'font-family: monospace; white-space: pre');
+    console.info('%c' + this.getOutput(), 'font-family: monospace; white-space: pre');
   }
 }
