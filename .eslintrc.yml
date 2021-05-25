@@ -6,5 +6,5 @@ rules:
   no-console:
     - warn
     - allow:
-      - log
+      - info
 
