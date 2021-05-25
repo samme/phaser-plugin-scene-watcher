@@ -1,3 +1,8 @@
+#### 6.0.0
+
+- Changed console output from `log()`, to `info()`, so it's easier to filter out.
+- Changed the order of console output to `event, key`.
+
 #### 5.0.1
 
 - Fixed an error when a scene had custom plugin mappings.
