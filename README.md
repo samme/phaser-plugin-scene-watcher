@@ -50,6 +50,15 @@ new Phaser.Game({
 });
 ```
 
+Quick load
+----------
+
+```javascript
+function preload () {
+      this.load.plugin('PhaserSceneWatcherPlugin', 'https://cdn.jsdelivr.net/npm/phaser-plugin-scene-watcher@6.0.0/dist/phaser-plugin-scene-watcher.umd.js', true);
+}
+```
+
 Log scene events to console
 ---------------------------
 
