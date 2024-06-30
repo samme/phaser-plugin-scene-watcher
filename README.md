@@ -21,7 +21,7 @@ Browser / UMD
 -------------
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/phaser-plugin-scene-watcher@6.0.0/dist/phaser-plugin-scene-watcher.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/phaser-plugin-scene-watcher@7.0.0/dist/phaser-plugin-scene-watcher.umd.js"></script>
 ```
 
 Use the global `PhaserSceneWatcherPlugin`.
@@ -60,7 +60,7 @@ Quick load
 
 ```javascript
 function preload () {
-  this.load.plugin('PhaserSceneWatcherPlugin', 'https://cdn.jsdelivr.net/npm/phaser-plugin-scene-watcher@6.0.0/dist/phaser-plugin-scene-watcher.umd.js', true);
+  this.load.plugin('PhaserSceneWatcherPlugin', 'https://cdn.jsdelivr.net/npm/phaser-plugin-scene-watcher@7.0.0/dist/phaser-plugin-scene-watcher.umd.js', true);
 }
 ```
 

@@ -1,3 +1,7 @@
+#### 7.0.0
+
+- Removed pre-ES2015 support.
+
 #### 6.0.0
 
 - Changed console output from `log()`, to `info()`, so it's easier to filter out.
