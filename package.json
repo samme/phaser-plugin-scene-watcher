@@ -1,6 +1,6 @@
 {
   "name": "phaser-plugin-scene-watcher",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "description": "Scene monitoring and debugging for Phaser 3",
   "module": "dist/phaser-plugin-scene-watcher.esm.js",
   "browser": "dist/phaser-plugin-scene-watcher.umd.js",

@@ -1,22 +1,22 @@
 import Phaser from 'phaser';
 
-var Pad = Phaser.Utils.String.Pad;
-var ICON_OTHER = ' ';
-var ICON_PAUSED = '.';
-var ICON_RUNNING = '*';
-var ICON_SLEEPING = '-';
-var ICON_ACTIVE = 'a';
-var ICON_VISIBLE = 'v';
-var ICON_TRANSITIONING = 't';
-var ICON_INPUT = 'i';
-var ICON_KEYBOARD = 'k';
-var NEWLINE = '\n';
-var EMPTY = '';
-var PAD_LEFT = 1;
-var PAD_RIGHT = 2;
-var ALIGN_LEFT = PAD_RIGHT;
-var ALIGN_RIGHT = PAD_LEFT;
-var SCENE_EVENTS = [
+const Pad = Phaser.Utils.String.Pad;
+const ICON_OTHER = ' ';
+const ICON_PAUSED = '.';
+const ICON_RUNNING = '*';
+const ICON_SLEEPING = '-';
+const ICON_ACTIVE = 'a';
+const ICON_VISIBLE = 'v';
+const ICON_TRANSITIONING = 't';
+const ICON_INPUT = 'i';
+const ICON_KEYBOARD = 'k';
+const NEWLINE = '\n';
+const EMPTY = '';
+const PAD_LEFT = 1;
+const PAD_RIGHT = 2;
+const ALIGN_LEFT = PAD_RIGHT;
+const ALIGN_RIGHT = PAD_LEFT;
+const SCENE_EVENTS = [
   Phaser.Scenes.Events.BOOT,
   Phaser.Scenes.Events.CREATE,
   Phaser.Scenes.Events.DESTROY,
@@ -28,14 +28,14 @@ var SCENE_EVENTS = [
   Phaser.Scenes.Events.START,
   Phaser.Scenes.Events.WAKE
 ].filter(Boolean);
-var SCENE_TRANSITION_EVENTS = [
+const SCENE_TRANSITION_EVENTS = [
   Phaser.Scenes.Events.TRANSITION_COMPLETE,
   Phaser.Scenes.Events.TRANSITION_INIT,
   Phaser.Scenes.Events.TRANSITION_OUT,
   Phaser.Scenes.Events.TRANSITION_START,
   Phaser.Scenes.Events.TRANSITION_WAKE
 ].filter(Boolean);
-var SCENE_STATES = {
+const SCENE_STATES = {
   0: 'pending',
   1: 'init',
   2: 'start',
@@ -47,8 +47,8 @@ var SCENE_STATES = {
   8: 'shutdown',
   9: 'destroyed'
 };
-var SPACE = ' ';
-var VIEW_STYLE = {
+const SPACE = ' ';
+const VIEW_STYLE = {
   position: 'absolute',
   left: '0',
   top: '0',
@@ -61,70 +61,69 @@ var VIEW_STYLE = {
   color: 'white',
   pointerEvents: 'none'
 };
-var ICONS = {};
-ICONS[Phaser.Scenes.RUNNING] = ICON_RUNNING;
-ICONS[Phaser.Scenes.SLEEPING] = ICON_SLEEPING;
-ICONS[Phaser.Scenes.PAUSED] = ICON_PAUSED;
+const ICONS = {
+  [Phaser.Scenes.RUNNING]: ICON_RUNNING,
+  [Phaser.Scenes.SLEEPING]: ICON_SLEEPING,
+  [Phaser.Scenes.PAUSED]: ICON_PAUSED
+};
 
-var Fit = function (val, width, dir) {
+const Fit = function (val, width, dir) {
   return Pad(String(val).substr(0, width), width, SPACE, dir);
 };
 
-var getIcon = function (scene) {
+const getIcon = function (scene) {
   return ICONS[scene.sys.settings.status] || ICON_OTHER;
 };
 
-var getKey = function (scene) {
+const getKey = function (scene) {
   return scene.sys.settings.key;
 };
 
-var getStatus = function (scene) {
+const getStatus = function (scene) {
   return SCENE_STATES[scene.sys.settings.status];
 };
 
-var getDisplayListLength = function (scene) {
+const getDisplayListLength = function (scene) {
   return scene.sys.displayList.length;
 };
 
-var getUpdateListLength = function (scene) {
+const getUpdateListLength = function (scene) {
   return scene.sys.updateList.length;
 };
 
-var getActiveIcon = function (scene) {
+const getActiveIcon = function (scene) {
   return scene.sys.settings.active ? ICON_ACTIVE : ICON_OTHER;
 };
 
-var getVisibleIcon = function (scene) {
+const getVisibleIcon = function (scene) {
   return scene.sys.settings.visible ? ICON_VISIBLE : ICON_OTHER;
 };
 
-var getTransitioningIcon = function (scene) {
+const getTransitioningIcon = function (scene) {
   return scene.sys.settings.isTransition ? ICON_TRANSITIONING : ICON_OTHER;
 };
 
-var getInputIcon = function (scene) {
+const getInputIcon = function (scene) {
   return isSceneInputActive(scene) ? ICON_INPUT : ICON_OTHER;
 };
 
-var getKeyboardIcon = function (scene) {
+const getKeyboardIcon = function (scene) {
   return isSceneKeyboardActive(scene) ? ICON_KEYBOARD : ICON_OTHER;
 };
 
-var isSceneInputActive = function (scene) {
-  var ref = scene.sys;
-  var input = ref.input;
+const isSceneInputActive = function (scene) {
+  const { input } = scene.sys;
 
   return Boolean(input && input.isActive());
 };
 
-var isSceneKeyboardActive = function (scene) {
-  var ref = scene.sys;
-  var input = ref.input;
+const isSceneKeyboardActive = function (scene) {
+  const { input } = scene.sys;
 
   return Boolean(input && input.keyboard && input.keyboard.isActive());
 };
 
-var COLS = [
+const COLS = [
   { name: 'icon', width: 2, pad: ALIGN_LEFT, output: getIcon },
   { name: 'key', width: 18, pad: ALIGN_LEFT, output: getKey },
   { name: 'status', width: 10, pad: ALIGN_LEFT, output: getStatus },
@@ -139,19 +138,15 @@ var COLS = [
 
 // console.table(COLS);
 
-var SceneWatcherPlugin = /*@__PURE__*/(function (superclass) {
-  function SceneWatcherPlugin (pluginManager) {
-    superclass.call(this, pluginManager);
+class SceneWatcherPlugin extends Phaser.Plugins.BasePlugin {
+  constructor (pluginManager) {
+    super(pluginManager);
     this.eventHandlers = {};
     this.transitionEventHandlers = {};
     this.output = '';
   }
 
-  if ( superclass ) SceneWatcherPlugin.__proto__ = superclass;
-  SceneWatcherPlugin.prototype = Object.create( superclass && superclass.prototype );
-  SceneWatcherPlugin.prototype.constructor = SceneWatcherPlugin;
-
-  SceneWatcherPlugin.prototype.init = function init () {
+  init () {
     this.view = document.createElement('pre');
     Object.assign(this.view.style, VIEW_STYLE);
     this.game.canvas.parentNode.append(this.view);
@@ -159,85 +154,83 @@ var SceneWatcherPlugin = /*@__PURE__*/(function (superclass) {
     SCENE_EVENTS.forEach(this.createEventHandler, this);
 
     SCENE_TRANSITION_EVENTS.forEach(this.createTransitionEventHandler, this);
-  };
+  }
 
-  SceneWatcherPlugin.prototype.start = function start () {
+  start () {
     this.game.events.on('poststep', this.postStep, this);
-  };
+  }
 
-  SceneWatcherPlugin.prototype.stop = function stop () {
+  stop () {
     this.game.events.off('poststep', this.postStep, this);
-  };
+  }
 
-  SceneWatcherPlugin.prototype.destroy = function destroy () {
+  destroy () {
     this.unwatchAll();
     this.view.remove();
     this.view = null;
-    superclass.prototype.destroy.call(this);
-  };
+    super.destroy();
+  }
 
-  SceneWatcherPlugin.prototype.postStep = function postStep () {
-    var output = this.getOutput();
+  postStep () {
+    const output = this.getOutput();
 
     if (output !== this.output) {
       this.view.textContent = output;
       this.output = output;
     }
-  };
+  }
 
-  SceneWatcherPlugin.prototype.createEventHandler = function createEventHandler (name) {
+  createEventHandler (name) {
     this.eventHandlers[name] = function (arg) {
       console.info(name, (arg.sys || arg).settings.key);
     };
-  };
+  }
 
-  SceneWatcherPlugin.prototype.createTransitionEventHandler = function createTransitionEventHandler (name) {
+  createTransitionEventHandler (name) {
     this.transitionEventHandlers[name] = function (scene) {
       console.info(name, scene.sys.settings.key);
     };
-  };
+  }
 
-  SceneWatcherPlugin.prototype.getOutput = function getOutput () {
+  getOutput () {
     return this.game.scene.scenes.map(this.getSceneOutput, this).join(NEWLINE);
-  };
+  }
 
-  SceneWatcherPlugin.prototype.getSceneOutput = function getSceneOutput (scene) {
+  getSceneOutput (scene) {
     return COLS.map(function (col) { return this.getColOutput(col, scene); }, this).join(EMPTY);
-  };
+  }
 
-  SceneWatcherPlugin.prototype.getColOutput = function getColOutput (col, scene) {
+  getColOutput (col, scene) {
     return Fit(col.output(scene), col.width, col.pad);
-  };
+  }
 
-  SceneWatcherPlugin.prototype.watchAll = function watchAll () {
+  watchAll () {
     this.game.scene.scenes.forEach(this.watch, this);
-  };
+  }
 
-  SceneWatcherPlugin.prototype.watch = function watch (scene) {
-    for (var eventName in this.eventHandlers) {
+  watch (scene) {
+    for (const eventName in this.eventHandlers) {
       scene.sys.events.on(eventName, this.eventHandlers[eventName], this);
     }
 
-    for (var eventName$1 in this.transitionEventHandlers) {
-      scene.sys.events.on(eventName$1, this.transitionEventHandlers[eventName$1], this);
+    for (const eventName in this.transitionEventHandlers) {
+      scene.sys.events.on(eventName, this.transitionEventHandlers[eventName], this);
     }
-  };
+  }
 
-  SceneWatcherPlugin.prototype.unwatchAll = function unwatchAll () {
+  unwatchAll () {
     this.game.scene.scenes.forEach(this.unwatch, this);
-  };
+  }
 
-  SceneWatcherPlugin.prototype.unwatch = function unwatch (scene) {
-    for (var eventName in this.eventHandlers) {
+  unwatch (scene) {
+    for (const eventName in this.eventHandlers) {
       scene.sys.events.off(eventName, this.eventHandlers[eventName], this);
     }
-  };
+  }
 
-  SceneWatcherPlugin.prototype.print = function print () {
+  print () {
     console.info('%c' + this.getOutput(), 'font-family: monospace; white-space: pre');
-  };
-
-  return SceneWatcherPlugin;
-}(Phaser.Plugins.BasePlugin));
+  }
+}
 
 export default SceneWatcherPlugin;
